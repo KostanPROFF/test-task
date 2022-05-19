@@ -1,0 +1,39 @@
+version: '3.1'
+
+services:
+  testtask:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    networks:
+      - lan
+    ports:
+      - '5000:5000'
+  wait:
+    image: waisbrot/wait
+    networks:
+      - lan
+    environment:
+    - TARGETS=testtask:5000
+  prometheus:
+    image: prom/prometheus:v2.1.0
+    networks:
+      - lan
+    ports:
+      - 9090:9090
+    volumes:
+      - ${PWD}/prometheus.yml:/etc/prometheus/prometheus.yml
+  grafana:
+    image: grafana/grafana
+    networks:
+      - lan
+    depends_on:
+      - prometheus
+    ports:
+      - 3000:3000
+    volumes:
+      - ${PWD}/grafana/provisioning/:/etc/grafana/provisioning/
+
+networks:
+    lan:
+      driver: bridge
