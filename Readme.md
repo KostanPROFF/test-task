@@ -9,7 +9,7 @@
  - docker-compose.yml, который запускает приложение со всем необходимым окружением (Prometheus и Grafana).
 
 # Реализация 
- - Dockerfile c Python Web-приложением на Flask с названием testtask которые выводит на 5000 TCP порт страницу "Hello world".
+ - Dockerfile c Python Web-приложением на Flask с названием *testtask* которые выводит на 5000 TCP порт страницу "Hello world".
  - Приложение имеет ready-check в виде образа waisbrot/wait который через переменную окружения TARGETS=testtask:5000 обращается к сервису и дожидаетя его запуска.
  - Приложение имеет health-check через встроенную функцию HEALTHCHECK, обращается на 5000 TCP порт через curl и, в случае получения отрицательного HTTP кода ответа, выходит при получении не 0 
 ответа.
